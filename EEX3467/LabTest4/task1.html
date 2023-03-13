@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Basic Calculation</title>
+    <style>
+        #maindiv {
+            border: solid 3px black;
+            padding: 5px 15px 15px 15px;
+            text-align: center;
+            width: 550px;
+            margin: auto;
+        }
+
+        #headertext {
+            background-color: rgb(115, 172, 115);
+            display: block;
+            padding: 5px;
+        }
+
+        #buttondiv {
+            margin-top: 15px;
+        }
+
+        .finalbuttons {
+            background-color: goldenrod;
+            border: none;
+            color: white;
+            padding: 5px;
+            width: 100px;
+        }
+
+        table {
+            margin: 15px;
+            width: 500px;
+            /* border-collapse: collapse; */
+            border-spacing: 10px;
+
+        }
+
+        .borerlabel {
+            border: solid 1px green;
+            width: 200px;
+            padding: 5px;
+        }
+
+        .inputtype {
+            padding: 5px;
+            width: 80px;
+            border: solid 1px black;
+        }
+
+        .inputbutton {
+            padding: 5px;
+            width: 100px;
+            text-align: left;
+            background-color: white;
+            border: solid 1px black;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="maindiv">
+        <label id="headertext">BASIC CALCULATION USING JAVASCRIPT</label>
+        <table>
+            <tr>
+                <td class="borerlabel">Input 01</td>
+                <td style="width: 10px;"></td>
+                <td><input id="input1" class="inputtype" type="text"></td>
+                <td style="width: 100px"></td>
+                <td><input id="add" class="inputbutton" type="submit" value="ADD" onclick="setSelectedButton(this.id)">
+                </td>
+            </tr>
+            <tr>
+                <td class="borerlabel">Input 02</td>
+                <td></td>
+                <td><input id="input2" class="inputtype" type="text"></td>
+                <td style="width: 100px"></td>
+                <td><input id="sub" class="inputbutton" type="submit" value="SUBTRACT"
+                        onclick="setSelectedButton(this.id)"></td>
+            </tr>
+            <tr>
+                <td class="borerlabel">Input 03</td>
+                <td></td>
+                <td><input id="input3" class="inputtype" type="text"></td>
+                <td style="width: 100px"></td>
+                <td><input id="div" class="inputbutton" type="submit" value="DIVIDE"
+                        onclick="setSelectedButton(this.id)"></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td><input id="mul" class="inputbutton" type="submit" value="MULTIPLY"
+                        onclick="setSelectedButton(this.id)"></td>
+            </tr>
+            <tr>
+                <td class="borerlabel">Answer</td>
+                <td></td>
+                <td><input id="result" class="inputtype" type="text" disabled="true"></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td colspan="2"><input id="ok" class="finalbuttons" type="submit" value="OK" onclick="calculate()"></td>
+                <td colspan="2"><input id="reset" class="finalbuttons" type="submit" value="RESET" onclick="reset()">
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <script>
+        //initial call to reset all
+        reset();
+        var selectedFunction = 'add'
+        function setSelectedButton(var1) {
+            // reset all other colors
+            resetButtonsColor();
+            document.getElementById('input3').disabled = false;
+            selectedFunction = var1;
+            document.getElementById(var1).style.backgroundColor = "green";
+            if (var1 == 'div') {
+                document.getElementById('input3').disabled = true;
+            }
+            document.getElementById('result').value = '0';
+        }
+
+        function resetButtonsColor() {
+            document.getElementById('add').style.backgroundColor = "white";
+            document.getElementById('sub').style.backgroundColor = "white";
+            document.getElementById('div').style.backgroundColor = "white";
+            document.getElementById('mul').style.backgroundColor = "white";
+        }
+
+        function reset() {
+            resetButtonsColor()
+            document.getElementById('input3').disabled = false;
+            //reset all entry and answers
+            document.getElementById('input1').value = 0;
+            document.getElementById('input2').value = 0;
+            document.getElementById('input3').value = 0;
+            document.getElementById('result').value = 0;
+            //set the add button as default 
+            selectedFunction = 'add'
+            document.getElementById('add').style.backgroundColor = "green";
+        }
+
+        function calculate() {
+            var input1 = parseFloat(document.getElementById('input1').value);
+            var input2 = parseFloat(document.getElementById('input2').value);
+            var input3 = parseFloat(document.getElementById('input3').value);
+            var result = 0;
+            if (selectedFunction == 'add') {
+                result = input1 + input2 + input3;
+            }
+            else if (selectedFunction == 'sub') {
+                result = input1 - input2 - input3;
+            }
+            else if (selectedFunction == 'div') {
+                if (input2 == 0) {
+                    //if zero set the answer to zero, alert and return
+                    document.getElementById('result').value = 0;
+                    alert("You can’t divide by Zero");
+                    return;
+                }
+                result = input1 / input2;
+            }
+            else if (selectedFunction == 'mul') {
+                result = input1 * input2 * input3;
+            }
+            document.getElementById('result').value = result;
+        }
+    </script>
+</body>
+
+</html>
